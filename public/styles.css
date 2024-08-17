@@ -1,0 +1,53 @@
+/* Basic reset */
+body, h1, div, select, button {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body styling */
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+/* Header styling */
+h1 {
+    margin-bottom: 20px;
+    font-size: 2em;
+    color: #2c3e50;
+}
+
+/* Score, Goal, and Tries */
+#score, #goal, #tries {
+    font-size: 1.5em;
+    margin: 10px 0;
+}
+
+/* Dropdown and button */
+select, button {
+    font-size: 1.2em;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #2c3e50;
+    background-color: #ecf0f1;
+    cursor: pointer;
+}
+
+/* Button hover effect */
+button:hover {
+    background-color: #3498db;
+    color: #fff;
+}
+
+/* Centering the divs */
+div {
+    text-align: center;
+}

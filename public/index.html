@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Long to Get 100</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <h1>How Long to Get 100</h1>
+
+    <!-- Registration Form -->
+    <div>
+        <h2>Register</h2>
+        <form id="registerForm">
+            <input type="text" id="registerUsername" name="username" placeholder="Username" required>
+            <input type="password" id="registerPassword" name="password" placeholder="Password" required>
+            <button type="submit">Register</button>
+        </form>
+    </div>
+
+    <!-- Login Form -->
+    <div>
+        <h2>Login</h2>
+        <form id="loginForm">
+            <input type="text" id="loginUsername" name="username" placeholder="Username" required>
+            <input type="password" id="loginPassword" name="password" placeholder="Password" required>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+
+    <!-- Game Section (only shows after login) -->
+    <div id="gameSection" style="display:none;">
+        <div id="score">Current Score: <span id="currentScore">1</span></div>
+        <div id="goal">Goal: 100</div>
+        <div id="tries">Tries: <span id="triesCount">0</span></div>
+        <div id="randomOperand">Last Operand: <span id="operandValue">0</span></div>
+
+        <div>
+            <select id="operation">
+                <option value="add">Add</option>
+                <option value="subtract">Subtract</option>
+                <option value="multiply">Multiply</option>
+                <option value="divide">Divide</option>
+            </select>
+        </div>
+
+        <div>
+            <button id="generate">Generate Random Operand</button>
+        </div>
+    </div>
+
+    <script src="app.js" defer></script>
+    <script>
+        // Function to show the game section after successful login
+        function showGameSection() {
+            document.getElementById('gameSection').style.display = 'block';
+        }
+
+        // Registration form handling
+        // Registration form handling
+        document.getElementById('registerForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const username = document.getElementById('registerUsername').value;
+            const password = document.getElementById('registerPassword').value;
+            const submitButton = document.querySelector('#registerForm button[type="submit"]');
+
+            // Disable the submit button to prevent multiple submissions
+            submitButton.disabled = true;
+
+            try {
+                console.log("Attempting to register:", username);
+                
+                const response = await fetch('http://localhost:5000/api/auth/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ username, password }),
+                });
+
+                const data = await response.json();
+                console.log("Registration response:", data);
+
+                if (response.ok) {
+                    alert('Registration successful! You can now log in.');
+                } else {
+                    alert(data.error || 'Registration failed.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred during registration.');
+            } finally {
+                // Re-enable the submit button
+                submitButton.disabled = false;
+            }
+        });
+
+
+        // Login form handling
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+        
+            const username = document.getElementById('loginUsername').value;
+            const password = document.getElementById('loginPassword').value;
+        
+            try {
+                const response = await fetch('http://localhost:5000/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ username, password }),
+                });
+        
+                const data = await response.json();
+                console.log(data);
+        
+                if (response.ok) {
+                    // Save the JWT token to localStorage
+                    localStorage.setItem('token', data.token);
+                    alert('Login successful!');
+                    showGameSection(); // Show the game section after login
+                } else {
+                    alert(data.error || 'Login failed.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred during login.');
+            }
+        });
+        
+    </script>
+</body>
+</html>
