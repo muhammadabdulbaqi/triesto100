@@ -3,6 +3,6 @@ This is a game I created using both frontend and backend. Aim of the game is to 
 
 
 needed changes:
-deploy
-change game so shows when reached 100 -> exit screen // save highscore
-change front end to make pretty
+1) deploy
+2) change game so shows when reached 100 -> exit screen // save highscore
+3) change front end to make pretty
